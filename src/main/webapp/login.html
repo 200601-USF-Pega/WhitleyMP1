@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+	function addGuest() {
+		let guest = {};
+		guest.username = document.querySelector("#username").value;
+		guest.account_type = document.querySelector("#account_type")
+		guest.user_password = document.querySelector("#user_password").value;
+		guest.user_actual_name = document.querySelector("#user_actual_name").value;
+
+		var req = new XMLHttpRequest();
+		req.onreadystatechange = function() {
+			if (this.readyState > 3) {
+				document.querySelector("#username").value = "";
+				document.querySelector("#account_type").value = "";
+				document.querySelector("#user_password").value = "";
+				document.querySelector("#user_actual_name").value = "";
+			}
+		}
+
+		req.open("POST",
+				"http://localhost:8080/FoolLickerBarP1/rest/service/addguest",
+				true);
+		req.setRequestHeader('Content-Type', 'application/json');
+		req.send(JSON.stringify(guest));
+	}
+</script>
+<link rel="stylesheet" href="fool_licker_bar.css">
+<title>Login</title>
+</head>
+
+<body>
+	<div class="container">
+		<h1>Login</h1>
+		<table>
+			<tr>
+				<td>
+					<button type="submit" onClick="addGuest()">Add Guest</button>
+					<div>
+						<label>Name</label>
+						<div>
+							<input type="text" id="user_actual_name" name="guestname" />
+						</div>
+					</div>
+					<div>
+						<label>Username</label>
+						<div>
+							<input type="text" id="username" name="guestusername" />
+						</div>
+					</div>
+					<div>
+						<label>Password</label>
+						<div>
+							<input type="text" id="user_password" name="guestpassword" />
+						</div>
+					</div>
+					<div>
+						<label>Account Type</label>
+						<div>
+							<input type="text" id="account_type" name="guestaccounttype" />
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+
+	</div>
+
+</body>
+
+</html>

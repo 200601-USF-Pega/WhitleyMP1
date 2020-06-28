@@ -2,51 +2,51 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		var stock = [];
-		function getAllItems() {
-			var xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function () {
-				if (this.readyState == 4 && this.status > 199) {
-					document.querySelectorAll("#stockTable tbody tr").forEach(
-						function (e) {
+<script>
+	var stock = [];
+	function getAllItems() {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status > 199) {
+				document.querySelectorAll("#stockTable tbody tr").forEach(
+						function(e) {
 							e.remove()
 						});
 
-					stock = JSON.parse(this.responseText);
-					let table = document.querySelector("#stockTable tbody");
+				stock = JSON.parse(this.responseText);
+				let table = document.querySelector("#stockTable tbody");
 
-					for (let i = 0; i < stock.length; ++i) {
-						let row = table.insertRow(table.rows.length);
+				for (let i = 0; i < stock.length; ++i) {
+					let row = table.insertRow(table.rows.length);
 
-						let alcoholTypeCell = row.insertCell(0);
-						alcoholTypeCell.innerHTML = stock[i].alcoholType;
+					let alcoholTypeCell = row.insertCell(0);
+					alcoholTypeCell.innerHTML = stock[i].alcoholType;
 
-						let nameCell = row.insertCell(1);
-						nameCell.innerHTML = stock[i].alcoholName;
+					let nameCell = row.insertCell(1);
+					nameCell.innerHTML = stock[i].alcoholName;
 
-						let contentCell = row.insertCell(2);
-						contentCell.innerHTML = stock[i].alcoholContent;
-						
-						let priceCell = row.insertCell(3);
-						priceCell.innerHTML = stock[i].alcoholPrice;
+					let contentCell = row.insertCell(2);
+					contentCell.innerHTML = stock[i].alcoholContent;
 
-					}
+					let priceCell = row.insertCell(3);
+					priceCell.innerHTML = stock[i].alcoholPrice;
+
 				}
-			};
-			xhttp.open("GET",
-				"http://localhost:8080/FoolLickerBarP1/rest/service/getallstock",
-				true);
-			xhttp.send();
-		}
-
-
-	</script>
-	<link rel="stylesheet" href="fool_licker_bar.css">
-	<title>Stock</title>
+			}
+		};
+		xhttp
+				.open(
+						"GET",
+						"http://localhost:8080/FoolLickerBarP1/rest/service/getallstock",
+						true);
+		xhttp.send();
+	}
+</script>
+<link rel="stylesheet" href="fool_licker_bar.css">
+<title>Stock</title>
 </head>
 
 <body>

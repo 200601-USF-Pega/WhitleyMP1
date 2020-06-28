@@ -4,14 +4,17 @@ public class Guest extends Account {
 	private String username;
 	private String password;
 	private String name;
+	private String accountType;
 
-	public Guest() {}
-	
-	public Guest(String name, String username, String password) {
+	public Guest() {
+	}
+
+	public Guest(String username, String accountType, String password, String name) {
 		super(name, username, password);
 		this.name = name;
 		this.username = username;
 		this.password = password;
+		this.accountType = accountType;
 	}
 
 	public String getUsername() {
@@ -26,6 +29,7 @@ public class Guest extends Account {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
+		result = prime * result + ((accountType == null) ? 0 : accountType.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
@@ -41,6 +45,11 @@ public class Guest extends Account {
 		if (getClass() != obj.getClass())
 			return false;
 		Guest other = (Guest) obj;
+		if (accountType == null) {
+			if (other.accountType != null)
+				return false;
+		} else if (!accountType.equals(other.accountType))
+			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -74,4 +83,13 @@ public class Guest extends Account {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public String getAccountType() {
+		return accountType;
+	}
+
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
+	}
+
 }
