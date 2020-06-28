@@ -1,0 +1,28 @@
+* {
+    background-color: lightcyan;
+}
+button {
+    background-color: lightgoldenrodyellow;
+    font-size: 40px;
+    padding: 5px;
+}
+table {
+    vertical-align: middle;
+}
+.container {
+    width: 100%;
+    text-align: center;
+}
+.btn {
+	border: 2px solid yellow;
+	font-size: 20px;
+	font-family: sans-serif;
+	padding: 10px;
+	background-color: beige;
+}
+a {
+	text-decoration: none;
+}
+.right{
+	align-content: right;
+}
