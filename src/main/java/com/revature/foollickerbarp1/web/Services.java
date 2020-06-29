@@ -22,24 +22,23 @@ import com.revature.foollickerbarp1.model.Guest;
 import com.revature.foollickerbarp1.model.Stock;
 import com.revature.foollickerbarp1.service.ValidationService;
 
-
 @Path("/service")
 public class Services {
 	StockRepoDB stockRepo = new StockRepoDB();
 	GuestRepoDB guestRepo = new GuestRepoDB();
 	BartenderRepoDB bartenderRepo = new BartenderRepoDB();
 	AdminRepoDB adminRepo = new AdminRepoDB();
-	
-	private ValidationService validation;
+
+	ValidationService validation = new ValidationService();
 	private static final Logger log = Logger.getLogger(Services.class);
-	
+
 	@GET
 	@Path("/getallstock")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllItems() {
-		return Response.ok((ArrayList<Stock>)stockRepo.getAllItems()).build();
+		return Response.ok((ArrayList<Stock>) stockRepo.getAllItems()).build();
 	}
-	
+
 	@POST
 	@Path("/addguest")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -48,7 +47,7 @@ public class Services {
 		log.info("Guest " + guest.getUsername() + " was successfully added.");
 		return Response.status(201).build();
 	}
-	
+
 	@POST
 	@Path("/adddrink")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -57,7 +56,7 @@ public class Services {
 		log.info("Your " + stock.getAlcoholName() + " was successfully created!");
 		return Response.status(201).build();
 	}
-	
+
 	@POST
 	@Path("/newuser")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -65,22 +64,22 @@ public class Services {
 		String username = guest.getUsername();
 		String password = guest.getPassword();
 		String name = guest.getName();
-		//UserTool tool = new UserTool();
-		//user = tool.createNewUser(username, password, password);
-		
-		if (username!=null && password!=null && name!=null) {
+		// UserTool tool = new UserTool();
+		// user = tool.createNewUser(username, password, password);
+
+		if (username != null && password != null && name != null) {
 			guestRepo.addGuest(guest);
-			//logger.info("User " + user.getUsername() + " successfully created.");
-    		System.out.println(username + " logged in successfully.");
-    		return Response.status(302).build();
+			 log.info("User " + guest.getUsername() + " successfully created.");
+			System.out.println(username + " logged in successfully.");
+			return Response.status(302).build();
 
 		} else {
 			System.out.println("User not created. Please try again.");
-		//	logger.warn("User " + user.getUsername() + " creation failed.");
+			// logger.warn("User " + user.getUsername() + " creation failed.");
 			return Response.status(403).build();
 		}
 	}
-	
+
 	@POST
 	@Path("/login")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -90,15 +89,23 @@ public class Services {
 		String password = guest.getPassword();
 		if (validation.usernameExistsValidation(username)) {
 			if (guestRepo.checkGuest(username, password)) {
+				if (this.adminCheck(username)) {
+					return Response.status(303).build();
+				}
+
+				if (this.bartenderCheck(username)) {
+					return Response.status(304).build();
+				}
+				
 				return Response.status(302).build();
 			}
 		} else {
 			System.out.println("Invalid user input.");
 		}
 		return null;
-		
+
 	}
-	
+
 	@POST
 	@Path("/deletedrink")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -107,14 +114,14 @@ public class Services {
 		log.info("The ever-disgusting " + stock.getAlcoholName() + " was successfully deleted!");
 		return Response.status(201).build();
 	}
-	
+
 	@GET
 	@Path("/getbartenders")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getBartenders() {
-		return Response.ok((ArrayList<Bartender>)adminRepo.getAllBartenders()).build();
+		return Response.ok((ArrayList<Bartender>) adminRepo.getAllBartenders()).build();
 	}
-	
+
 	@PUT
 	@Path("/addbartender")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -123,14 +130,14 @@ public class Services {
 		log.info("Bartender" + bartender.getName() + " was successfully initiated!");
 		return Response.status(201).build();
 	}
-	
+
 	@GET
 	@Path("/menu")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getMenu() {
-		return Response.ok((ArrayList<Stock>)stockRepo.getMenu()).build();
+		return Response.ok((ArrayList<Stock>) stockRepo.getMenu()).build();
 	}
-	
+
 	@POST
 	@Path("/orderdrink")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -139,7 +146,7 @@ public class Services {
 		log.info("Your " + stock.getAlcoholName() + " was successfully orded!");
 		return Response.status(201).build();
 	}
-	
+
 	@POST
 	@Path("/leaveatip")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -148,12 +155,28 @@ public class Services {
 		log.info("Your tip was successfully left! How generous");
 		return Response.status(201).build();
 	}
-	
+
 	@GET
 	@Path("/getallguests")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllGuests() {
-		return Response.ok((ArrayList<Guest>)bartenderRepo.getAllGuests()).build();
+		return Response.ok((ArrayList<Guest>) bartenderRepo.getAllGuests()).build();
+	}
+
+	public boolean adminCheck(String username) {
+		if (guestRepo.checkAdmin(username)) {
+			log.info("Welcome, your majesty");
+			return true;
+		}
+		return false;
 	}
 	
+	public boolean bartenderCheck(String username) {
+		if (guestRepo.checkBartender(username)) {
+			log.info("Hello bartender");
+			return true;
+		}
+		return false;
+	}
+
 }

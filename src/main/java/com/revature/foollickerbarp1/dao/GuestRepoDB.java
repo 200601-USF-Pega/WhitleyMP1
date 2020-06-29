@@ -45,7 +45,7 @@ public class GuestRepoDB {
 			while (rs.next()) {
 				Guest g = new Guest();
 				g.setUsername(rs.getString("username"));
-				g.setName(rs.getString("user_actual_name"));
+				//g.setName(rs.getString("user_actual_name"));
 				allGuests.add(g);
 			}
 			
@@ -78,6 +78,46 @@ public class GuestRepoDB {
 			System.out.println("Exception: " + e.getMessage());
 			e.printStackTrace();
 		}
+		return false;
+	}
+	
+	public boolean checkAdmin(String username) {
+		try {
+			Statement s = ConnectionService.getConnection().createStatement();
+			s.executeQuery("SELECT * FROM users WHERE users.account_type ='Admin';");
+			
+			ResultSet rs = s.getResultSet();
+			while (rs.next()) {
+				if (rs.getString("username").equalsIgnoreCase(username)) {
+					return true;
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("Exception: " + e.getMessage());
+			e.printStackTrace();
+		}
+		
+		System.out.println("User not found.");
+		return false;
+	}
+	
+	public boolean checkBartender(String username) {
+		try {
+			Statement s = ConnectionService.getConnection().createStatement();
+			s.executeQuery("SELECT * FROM users WHERE users.account_type ='Bartender';");
+			
+			ResultSet rs = s.getResultSet();
+			while (rs.next()) {
+				if (rs.getString("username").equalsIgnoreCase(username)) {
+					return true;
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("Exception: " + e.getMessage());
+			e.printStackTrace();
+		}
+		
+		System.out.println("User not found.");
 		return false;
 	}
 }

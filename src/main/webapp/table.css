@@ -1,0 +1,37 @@
+/* spacing */
+
+table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  border: 3px solid SaddleBrown;
+  background-color: #ec7e2a;
+}
+
+thead th:nth-child(1) {
+  width: 30%;
+}
+
+thead th:nth-child(2) {
+  width: 20%;
+}
+
+thead th:nth-child(3) {
+  width: 15%;
+}
+
+thead th:nth-child(4) {
+  width: 35%;
+}
+
+th, td {
+  padding: 20px;
+}
+
+
+
+
+background{
+	  background: url("https://gizmobrewworks.com/wp-content/uploads/2019/11/Artboard_Raleigh-1@1.5x-1500x430.jpg");
+  opacity:0.2;
+}

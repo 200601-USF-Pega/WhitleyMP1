@@ -21,8 +21,11 @@
 				document.querySelector("#username").value = "";
 				document.querySelector("#password").value = "";
 			}
+			if (this.readyState == 4 && this.status == 302) {
+				location.href = 'guest.html';
+			}
 			if (this.readyState == 4 && this.status == 403) {
-				//alert("Username already used. Please try again or log in with credentials.");
+				alert("Something went wrong. Try again.");
 			}
 		}
 
@@ -32,22 +35,16 @@
 
 	}
 </script>
+<link rel="stylesheet" href="table.css">
 </head>
 <body>
-	<!--split screen style adapted from https://www.w3schools.com/howto/howto_css_split_screen.asp-->
-	<div class="split left">
-		<!--promotional content section-->
-		<div class="rightalign">
-			<h1>Don't leave money on the table</h1>
-			<h7>Start using the Credit Card Reward Tracker today</h7>
-		</div>
-	</div>
+
 
 	<div class="split right">
 		<!--login section-->
 		<div class="leftalign">
 			<h1>Sign Up</h1>
-			<p>Please enter your information below to create an account</p>
+			<p>Please enter your information below to create your very own Fool Licker Bar account</p>
 			<table>
 				<tr>
 					<td><label for="name">Name:</label></td>
@@ -64,12 +61,9 @@
 			</table>
 			<br> <input type="button" id="inpButton" value="Sign Up"
 				onclick="createUser()"> <br> <br>
+
 			<p>
-				Already have an account? Sign in below!<br> <a
-					href="login.html">Sign In</a>
-			</p>
-			<p>
-				Lost? Go home. <br> <a href="homepage.html">Home</a>
+			<br> <a href="index.html">Home</a>
 			</p>
 		</div>
 	</div>

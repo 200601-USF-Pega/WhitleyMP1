@@ -92,7 +92,7 @@
 		xhttp.send();
 	}
 </script>
-<link rel="stylesheet" href="fool_licker_bar.css">
+<link rel="stylesheet" href="table.css">
 <title>Admin</title>
 </head>
 
@@ -103,8 +103,8 @@
 			<tr>
 
 				<td>
-					<button type="submit" onClick="getBartenders()">Review
-						Bartender Information</button>
+					<input type="button" id="inpButton" value="Review Bartender Information"
+				onclick="getBartenders()"></button>
 				</td>
 
 			</tr>
@@ -112,27 +112,32 @@
 				<td>
 					<div>
 						<label>Bartender Name</label>
+						<br>
 						<div>
 							<input type="text" id="name" name="name" />
 						</div>
 					</div>
 
-					<button type="submit" onClick="addBartender()">Add
-						Bartender</button>
+					<input type="button" id="inpButton" value="Add Bartender"
+				onclick="addBartender()"></button>
+				</td>
+			</tr>
+		
+			
+			<tr>
+
+				<td>
+					<input type="button" id="inpButton" value="Check on Guests"
+				onclick="getAllGuests()">
 				</td>
 			</tr>
 			<tr>
 
 				<td><a href="stock.html" class="btn">Review Stock
 						Information</a></td>
+					
+						
 
-			</tr>
-			<tr>
-
-				<td>
-					<button type="submit" onClick="getAllGuests()">Check on
-						Guests</button>
-				</td>
 			</tr>
 		</table>
 
@@ -153,8 +158,8 @@
 	<table id="guestTable">
 		<thead>
 			<tr>
-				<td>Name</td>
-				<td>Username</td>
+				<td scope = "col">Name</td>
+				<td scope = "col">Username</td>
 
 			</tr>
 		</thead>
