@@ -4,13 +4,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Log In to Access the Bar</title>
 <script>
 	function addGuest() {
 		let guest = {};
 		guest.username = document.querySelector("#username").value;
-		guest.account_type = document.querySelector("#account_type")
-		guest.user_password = document.querySelector("#user_password").value;
-		guest.user_actual_name = document.querySelector("#user_actual_name").value;
+		guest.accountType = document.querySelector("#account_type").value;
+		guest.password = document.querySelector("#user_password").value;
+		guest.name = document.querySelector("#user_actual_name").value;
 
 		var req = new XMLHttpRequest();
 		req.onreadystatechange = function() {
@@ -39,31 +40,33 @@
 		<table>
 			<tr>
 				<td>
-					<button type="submit" onClick="addGuest()">Add Guest</button>
+					
 					<div>
 						<label>Name</label>
 						<div>
-							<input type="text" id="user_actual_name" name="guestname" />
+							<input type="text" id="user_actual_name" name="user_actual_name" />
 						</div>
 					</div>
 					<div>
 						<label>Username</label>
 						<div>
-							<input type="text" id="username" name="guestusername" />
+							<input type="text" id="username" name="username" />
 						</div>
 					</div>
 					<div>
 						<label>Password</label>
 						<div>
-							<input type="text" id="user_password" name="guestpassword" />
+							<input type="text" id="user_password" name="user_password" />
 						</div>
 					</div>
 					<div>
 						<label>Account Type</label>
 						<div>
-							<input type="text" id="account_type" name="guestaccounttype" />
+							<input type="text" id="account_type" name="account_type" />
 						</div>
 					</div>
+					
+					<button type="submit" onClick="addGuest()">Log in</button>
 				</td>
 			</tr>
 		</table>

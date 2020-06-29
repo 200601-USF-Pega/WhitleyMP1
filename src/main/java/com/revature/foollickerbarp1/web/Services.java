@@ -15,6 +15,7 @@ import com.revature.foollickerbarp1.dao.StockRepoDB;
 import com.revature.foollickerbarp1.model.Guest;
 import com.revature.foollickerbarp1.model.Stock;
 
+
 @Path("/service")
 public class Services {
 	StockRepoDB stockRepo = new StockRepoDB();

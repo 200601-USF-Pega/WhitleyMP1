@@ -1,6 +1,6 @@
 package com.revature.foollickerbarp1.model;
 
-public class Guest extends Account {
+public class Guest {
 	private String username;
 	private String password;
 	private String name;
@@ -10,11 +10,12 @@ public class Guest extends Account {
 	}
 
 	public Guest(String username, String accountType, String password, String name) {
-		super(name, username, password);
-		this.name = name;
-		this.username = username;
-		this.password = password;
-		this.accountType = accountType;
+		//super(name, username, password);
+		super();
+		this.username=username;
+		this.accountType=accountType;
+		this.password=password;
+		this.name=name;
 	}
 
 	public String getUsername() {
