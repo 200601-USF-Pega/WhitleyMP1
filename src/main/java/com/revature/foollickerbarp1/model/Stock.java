@@ -6,15 +6,25 @@ public class Stock {
 	private String alcoholName;
 	private int alcoholContent;
 	private int alcoholPrice;
+	private int alcoholAmount;
 
 	public Stock() {
 	}
 
-	public Stock(String alcoholType, String alcoholName, int alcoholContent, int alcoholPrice) {
+	public Stock(String alcoholType, String alcoholName, int alcoholContent, int alcoholPrice, int alcoholAmount) {
 		this.alcoholType = alcoholType;
 		this.alcoholName = alcoholName;
 		this.alcoholContent = alcoholContent;
 		this.alcoholPrice = alcoholPrice;
+		this.alcoholAmount = alcoholAmount;
+	}
+
+	public int getAlcoholAmount() {
+		return alcoholAmount;
+	}
+
+	public void setAlcoholAmount(int alcoholAmount) {
+		this.alcoholAmount = alcoholAmount;
 	}
 
 	public String getAlcoholType() {

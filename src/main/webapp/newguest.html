@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Guest Window</title>
+
+
+<script>
+	function createUser() {
+		let user = {};
+		user.name = document.querySelector("#name").value;
+		user.username = document.querySelector("#username").value;
+		user.password = document.querySelector("#password").value;
+		//passwordVerify = document.querySelector("#reenter").value;
+
+		var req = new XMLHttpRequest();
+		req.onreadystatechange = function() {
+			if (this.readyState > 3) {
+				document.querySelector("#name").value = "";
+				document.querySelector("#username").value = "";
+				document.querySelector("#password").value = "";
+			}
+			if (this.readyState == 4 && this.status == 403) {
+				alert("Username already used. Please try again or log in with credentials.");
+			}
+		}
+
+		req.open("POST","http://localhost:8080/FoolLickerBarP1/rest/service/newuser",true);
+		req.setRequestHeader('Content-Type', 'application/json');
+		req.send(JSON.stringify(user));
+
+	}
+</script>
+</head>
+<body>
+	<!--split screen style adapted from https://www.w3schools.com/howto/howto_css_split_screen.asp-->
+	<div class="split left">
+		<!--promotional content section-->
+		<div class="rightalign">
+			<h1>Don't leave money on the table</h1>
+			<h7>Start using the Credit Card Reward Tracker today</h7>
+		</div>
+	</div>
+
+	<div class="split right">
+		<!--login section-->
+		<div class="leftalign">
+			<h1>Sign Up</h1>
+			<p>Please enter your information below to create an account</p>
+			<table>
+				<tr>
+					<td><label for="username">Username:</label></td>
+					<td><input type="text" id="username" name="username"></td>
+				</tr>
+				<tr>
+					<td><label for="password">Password:</label></td>
+					<td><input type="password" id="password" name="password"></td>
+				</tr>
+				<tr>
+					<td><label for="reenter">Re-enter Password:</label></td>
+					<td><input type="password" id="reenter" name="reenter"></label></td>
+				</tr>
+			</table>
+			<br> <input type="button" id="inpButton" value="Sign Up"
+				onclick="createUser()"> <br> <br>
+			<p>
+				Already have an account? Sign in below!<br> <a
+					href="login.html">Sign In</a>
+			</p>
+			<p>
+				Lost? Go home. <br> <a href="homepage.html">Home</a>
+			</p>
+		</div>
+	</div>
+</body>
+</html>

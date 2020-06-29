@@ -36,4 +36,35 @@ public class Services {
 		return Response.status(201).build();
 	}
 	
+	@POST
+	@Path("/adddrink")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addDrink(Stock stock) {
+		stockRepo.addDrink(stock);
+		return Response.status(201).build();
+	}
+	
+	@POST
+	@Path("/newuser")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response newUser(Guest guest) {
+		String username = guest.getUsername();
+		String password = guest.getPassword();
+		//UserTool tool = new UserTool();
+		//user = tool.createNewUser(username, password, password);
+		
+		if (guest.getUsername()!=null && guest.getPassword()!=null) {
+			guestRepo.addGuest(guest);
+			//logger.info("User " + user.getUsername() + " successfully created.");
+    		System.out.println(username + " logged in successfully.");
+    		return Response.status(302).build();
+
+		} else {
+			System.out.println("User not created. Please try again.");
+		//	logger.warn("User " + user.getUsername() + " creation failed.");
+			return Response.status(403).build();
+		}
+	}
+	
+	
 }
