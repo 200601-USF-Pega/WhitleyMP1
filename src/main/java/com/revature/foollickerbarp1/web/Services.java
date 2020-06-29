@@ -11,6 +11,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.log4j.Logger;
+
 import com.revature.foollickerbarp1.dao.AdminRepoDB;
 import com.revature.foollickerbarp1.dao.BartenderRepoDB;
 import com.revature.foollickerbarp1.dao.GuestRepoDB;
@@ -29,7 +31,7 @@ public class Services {
 	AdminRepoDB adminRepo = new AdminRepoDB();
 	
 	private ValidationService validation;
-	
+	private static final Logger log = Logger.getLogger(Services.class);
 	
 	@GET
 	@Path("/getallstock")
@@ -43,6 +45,7 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addGuest(Guest guest) {
 		guestRepo.addGuest(guest);
+		log.info("Guest " + guest.getUsername() + " was successfully added.");
 		return Response.status(201).build();
 	}
 	
@@ -51,6 +54,7 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addDrink(Stock stock) {
 		stockRepo.addDrink(stock);
+		log.info("Your " + stock.getAlcoholName() + " was successfully created!");
 		return Response.status(201).build();
 	}
 	
@@ -100,6 +104,7 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response deleteDrink(Stock stock) {
 		stockRepo.deleteDrink(stock);
+		log.info("The ever-disgusting " + stock.getAlcoholName() + " was successfully deleted!");
 		return Response.status(201).build();
 	}
 	
@@ -115,6 +120,7 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addBartender(Bartender bartender) {
 		adminRepo.addBartender(bartender);
+		log.info("Bartender" + bartender.getName() + " was successfully initiated!");
 		return Response.status(201).build();
 	}
 	
@@ -130,6 +136,7 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response orderDrink(Stock stock) {
 		stockRepo.orderDrink(stock);
+		log.info("Your " + stock.getAlcoholName() + " was successfully orded!");
 		return Response.status(201).build();
 	}
 	
@@ -138,6 +145,7 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response tipBartender(Bartender bartender) {
 		bartenderRepo.tipBartender(bartender);
+		log.info("Your tip was successfully left! How generous");
 		return Response.status(201).build();
 	}
 	
