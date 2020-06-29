@@ -2,32 +2,44 @@ package com.revature.foollickerbarp1.model;
 
 import com.revature.foollickerbarp1.model.Account;
 
-public class Bartender extends Account{
-	
-	private String codeName;
-	private String userName;
-	private String password;
-	
-	public Bartender(){}
-	
-	public Bartender(String codeName, String userName, String password) {
-		super(codeName, userName, password);
-		this.codeName = codeName;
-		this.userName = userName;
-		this.password = password;
+public class Bartender extends Account {
+
+	String username;
+	double tipAmount;
+
+	public Bartender() {
 	}
-	
-	public String getCodeName() {
-		return codeName;
+
+	public Bartender(String userName, double tipAmount) {
+		super();
+		this.username= userName;
+		this.tipAmount = tipAmount;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public double getTipAmount() {
+		return tipAmount;
+	}
+
+	public void setTipAmount(double tipAmount) {
+		this.tipAmount = tipAmount;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((codeName == null) ? 0 : codeName.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(tipAmount);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
 
@@ -40,42 +52,14 @@ public class Bartender extends Account{
 		if (getClass() != obj.getClass())
 			return false;
 		Bartender other = (Bartender) obj;
-		if (codeName == null) {
-			if (other.codeName != null)
-				return false;
-		} else if (!codeName.equals(other.codeName))
+		if (Double.doubleToLongBits(tipAmount) != Double.doubleToLongBits(other.tipAmount))
 			return false;
-		if (password == null) {
-			if (other.password != null)
+		if (username == null) {
+			if (other.username != null)
 				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (userName == null) {
-			if (other.userName != null)
-				return false;
-		} else if (!userName.equals(other.userName))
+		} else if (!username.equals(other.username))
 			return false;
 		return true;
 	}
-
-	public void setCodeName(String codeName) {
-		this.codeName = codeName;
-	}
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 
 }

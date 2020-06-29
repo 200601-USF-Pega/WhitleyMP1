@@ -5,14 +5,16 @@ import java.util.ArrayList;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-
+import com.revature.foollickerbarp1.dao.BartenderRepoDB;
 import com.revature.foollickerbarp1.dao.GuestRepoDB;
 import com.revature.foollickerbarp1.dao.StockRepoDB;
+import com.revature.foollickerbarp1.model.Bartender;
 import com.revature.foollickerbarp1.model.Guest;
 import com.revature.foollickerbarp1.model.Stock;
 import com.revature.foollickerbarp1.service.ValidationService;
@@ -22,6 +24,8 @@ import com.revature.foollickerbarp1.service.ValidationService;
 public class Services {
 	StockRepoDB stockRepo = new StockRepoDB();
 	GuestRepoDB guestRepo = new GuestRepoDB();
+	BartenderRepoDB bartenderRepo = new BartenderRepoDB();
+	
 	private ValidationService validation;
 	
 	
@@ -97,5 +101,19 @@ public class Services {
 		return Response.status(201).build();
 	}
 	
+	@GET
+	@Path("/getbartenders")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getBartenders() {
+		return Response.ok((ArrayList<Bartender>)bartenderRepo.getAllBartenders()).build();
+	}
+	
+	@PUT
+	@Path("/addbartender")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addBartender(Bartender bartender) {
+		bartenderRepo.addBartender(bartender);
+		return Response.status(201).build();
+	}
 	
 }

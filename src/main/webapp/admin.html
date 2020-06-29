@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+	var bartender = [];
+	function getBartenders() {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status > 199) {
+				document.querySelectorAll("#bartenderTable tbody tr").forEach(
+						function(e) {
+							e.remove()
+						});
+
+				bartender = JSON.parse(this.responseText);
+				let table = document.querySelector("#bartenderTable tbody");
+
+				for (let i = 0; i < bartender.length; ++i) {
+				let row = table.insertRow(table.rows.length);
+
+				let bartenderNameCell = row.insertCell(0);
+				bartenderNameCell.innerHTML = bartender[i].name;
+
+				let bartenderTipCell = row.insertCell(1);
+				bartenderTipCell.innerHTML = bartender[i].tipAmount;
+
+				}
+			}
+		};
+		xhttp
+				.open(
+						"GET",
+						"http://localhost:8080/FoolLickerBarP1/rest/service/getbartenders",
+						true);
+		xhttp.send();
+	}
+
+	function addBartender() {
+		let newB = {};
+		newB.name = document.querySelector("#name").value;
+		//newB.tipAmount = document.querySelector("#tipAmount").value;
+		var req = new XMLHttpRequest();
+		req.onreadystatechange = function() {
+			if (this.readyState > 3) {
+				document.querySelector("#name").value = "";
+				//document.querySelector("#tipAmount").value = "";
+			}
+		}
+
+		req.open("PUT",
+				"http://localhost:8080/FoolLickerBarP1/rest/service/addbartender",
+				true);
+		req.setRequestHeader('Content-Type', 'application/json');
+		req.send(JSON.stringify(newB));
+	}
+</script>
+<link rel="stylesheet" href="fool_licker_bar.css">
+<title>Admin</title>
+</head>
+
+<body>
+	<div class="container">
+		<h1>Admin Page</h1>
+		<table>
+			<tr>
+
+				<td>
+					<button type="submit" onClick="getBartenders()">Review
+						Bartender Information</button>
+				</td>
+
+			</tr>
+			<tr>
+			<td>
+				<div>
+					<label>Bartender Name</label>
+					<div>
+						<input type="text" id="name" name="name" />
+					</div>
+				</div>
+
+				<button type="submit" onClick="addBartender()">Add Bartender</button>
+			</td>
+			</tr>
+		</table>
+
+	</div>
+
+	<table id="bartenderTable">
+		<thead>
+			<tr>
+				<td>Name</td>
+				<td>Tip Amount ($)</td>
+			</tr>
+		</thead>
+		<tbody>
+
+		</tbody>
+	</table>
+
+</body>
+
+</html>
