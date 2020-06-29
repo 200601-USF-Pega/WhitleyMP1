@@ -82,4 +82,51 @@ public class StockRepoDB {
 			System.out.println("Exception: " + e.getMessage());
 		}
 	}
+	
+	public List<Stock> getMenu() {
+		try {
+			List<Stock> result = new ArrayList<Stock>();
+
+			try {
+				Statement s = ConnectionService.getConnection().createStatement();
+				s.executeQuery("SELECT * FROM stock;");
+
+				ResultSet rs = s.getResultSet();
+				while (rs.next()) {
+					Stock stock = new Stock();
+					stock.setAlcoholType(rs.getString("alcohol_type"));
+					stock.setAlcoholName(rs.getString("alcohol_name"));
+					stock.setAlcoholContent(rs.getInt("alcohol_content"));
+					stock.setAlcoholPrice(rs.getInt("alcohol_price"));
+					result.add(stock);
+				}
+
+				return result;
+
+			} catch (SQLException e) {
+				System.out.println("Exception: " + e.getMessage());
+				e.printStackTrace();
+			}
+
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public void orderDrink(Stock stock) {
+		try {
+			PreparedStatement orderDrink = ConnectionService.getConnection()
+					.prepareStatement("UPDATE stock SET stockadmin = stockadmin - 5 WHERE alcohol_name = ?");
+
+			orderDrink.setString(1, stock.getAlcoholName());
+
+			orderDrink.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("Exception: " + e.getMessage());
+		}
+	}
+	
 }

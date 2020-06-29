@@ -116,4 +116,20 @@ public class Services {
 		return Response.status(201).build();
 	}
 	
+	@GET
+	@Path("/menu")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getMenu() {
+		return Response.ok((ArrayList<Stock>)stockRepo.getMenu()).build();
+	}
+	
+	@POST
+	@Path("/orderdrink")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response orderDrink(Stock stock) {
+		stockRepo.orderDrink(stock);
+		return Response.status(201).build();
+	}
+	
+	
 }

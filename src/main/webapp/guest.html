@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+	var stock = [];
+	function getMenu() {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status > 199) {
+				document.querySelectorAll("#stockTable tbody tr").forEach(
+						function(e) {
+							e.remove()
+						});
+
+				stock = JSON.parse(this.responseText);
+				let table = document.querySelector("#stockTable tbody");
+
+				for (let i = 0; i < stock.length; ++i) {
+					let row = table.insertRow(table.rows.length);
+
+					let alcoholTypeCell = row.insertCell(0);
+					alcoholTypeCell.innerHTML = stock[i].alcoholType;
+
+					let nameCell = row.insertCell(1);
+					nameCell.innerHTML = stock[i].alcoholName;
+
+					let contentCell = row.insertCell(2);
+					contentCell.innerHTML = stock[i].alcoholContent;
+
+					let priceCell = row.insertCell(3);
+					priceCell.innerHTML = stock[i].alcoholPrice;
+
+				}
+			}
+		};
+		xhttp
+				.open(
+						"GET",
+						"http://localhost:8080/FoolLickerBarP1/rest/service/menu",
+						true);
+		xhttp.send();
+	}
+
+	function orderDrink() {
+		let drinkOrder = {};
+		drinkOrder.alcoholName = document.querySelector("#name").value;
+
+		var req = new XMLHttpRequest();
+		req.onreadystatechange = function() {
+			if (this.readyState > 3) {
+				document.querySelector("#name").value = "";
+
+			}
+		}
+
+		req
+				.open(
+						"POST",
+						"http://localhost:8080/FoolLickerBarP1/rest/service/orderdrink",
+						true);
+		req.setRequestHeader('Content-Type', 'application/json');
+		req.send(JSON.stringify(drinkOrder));
+	}
+</script>
+<link rel="stylesheet" href="fool_licker_bar.css">
+<title>Stock</title>
+</head>
+
+<body>
+	<div class="container">
+		<h1>Stock</h1>
+		<table>
+			<tr>
+				<td>
+					<button type="submit" onClick="getMenu()">Check out our
+						menu!</button>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<div>
+					<label>Drink Name</label>
+					<div>
+						<input type="text" id="name" name="name" />
+					</div>
+				</div>
+
+				<button type="submit" onClick="orderDrink()">Order Drink!</button>
+			</td>
+			</tr>
+		</table>
+
+
+
+	</div>
+	<table id="stockTable">
+		<thead>
+			<tr>
+				<td>Alcohol Type</td>
+				<td>Name</td>
+				<td>Alcohol Content (%)</td>
+				<td>Price ($)</td>
+			</tr>
+		</thead>
+		<tbody>
+
+		</tbody>
+	</table>
+
+</body>
+
+</html>
