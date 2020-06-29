@@ -33,7 +33,7 @@
 
 					let priceCell = row.insertCell(3);
 					priceCell.innerHTML = stock[i].alcoholPrice;
-					
+
 					let amountCell = row.insertCell(4);
 					amountCell.innerHTML = stock[i].alcoholAmount;
 
@@ -72,6 +72,22 @@
 				true);
 		req.setRequestHeader('Content-Type', 'application/json');
 		req.send(JSON.stringify(drink));
+	}
+
+	function deleteDrink() {
+		let drink2 = {};
+		drink2.alcoholName = document.querySelector("#drinkname").value;
+
+		var req = new XMLHttpRequest();
+		req.onreadystatechange = function() {
+			if (this.readyState > 3) {
+				document.querySelector("#drinkname").value = "";
+			}
+		}
+
+		req.open("POST","http://localhost:8080/FoolLickerBarP1/rest/service/deletedrink",true);
+		req.setRequestHeader('Content-Type', 'application/json');
+		req.send(JSON.stringify(drink2));
 	}
 </script>
 <link rel="stylesheet" href="fool_licker_bar.css">
@@ -118,6 +134,15 @@
 						</div>
 					</div>
 					<button type="submit" onClick="addDrink()">Add Drink</button>
+				</td>
+				<td>
+					<div>
+						<label>Drink Name</label>
+						<div>
+							<input type="text" id="drinkname" name="drinkname" />
+						</div>
+					</div>
+					<button type="submit" onClick="deleteDrink()">Delete Drink</button>
 				</td>
 			</tr>
 		</table>

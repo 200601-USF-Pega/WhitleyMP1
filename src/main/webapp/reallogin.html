@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Real Login</title>
+
+
+<script>
+	function storeGuest() {
+		let guest = {};
+		guest.username = document.querySelector("#username").value;
+		guest.accountType = document.querySelector("#account_type").value;
+		guest.password = document.querySelector("#user_password").value;
+		var req = new XMLHttpRequest();
+		req.onreadystatechange = function() {
+			if (this.readyState > 3) {
+				document.querySelector("#username").value = "";
+				document.querySelector("#account_type").value = "";
+				document.querySelector("#user_password").value = "";
+			}
+			//*		if (this.readyState == 4 && this.status == 302) {
+			//		sessionStorage.setItem("username", user.username);
+			//		location.href = 'stock.html';
+			//	}
+			//	if (this.readyState == 4 && this.status == 303) {
+			//		sessionStorage.setItem("username", user.username);
+			//		location.href = 'admin.html';
+			//		}
+			//	if (this.readyState == 4 && this.status == 403) {
+			//		alert("Username or password is incorrect. Please try again.");
+			//}
+		}
+
+		req.open("POST",
+				"http://localhost:8080/FoolLickerBarP1/rest/service/login",
+				true);
+		req.setRequestHeader('Content-Type', 'application/json');
+		req.send(JSON.stringify(guest));
+
+	}
+</script>
+</head>
+<body>
+	<h1>Log In</h1>
+	<p>Please enter your log in information below.</p>
+	<table>
+		<tr>
+			<td><input type="text" id="username" name="username"
+				placeholder="Username"></td>
+		</tr>
+		<tr>
+			<td><input type="text" id="account_type" name="account_type"
+				placeholder="Account Type"></td>
+		</tr>
+		<tr>
+			<td><input type="password" id="user_password"
+				name="user_password" placeholder="Password"></td>
+		</tr>
+	</table>
+	<br>
+	<input type="button" id="inpButton" value="Log In"
+		onclick="storeGuest()">
+	<br>
+	<br>
+
+	</div>
+	</div>
+</body>
+</html>

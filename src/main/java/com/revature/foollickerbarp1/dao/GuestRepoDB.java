@@ -1,8 +1,11 @@
 package com.revature.foollickerbarp1.dao;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.revature.foollickerbarp1.model.Guest;
 import com.revature.foollickerbarp1.web.ConnectionService;
@@ -10,6 +13,7 @@ import com.revature.foollickerbarp1.web.ConnectionService;
 public class GuestRepoDB {
 
 	public void addGuest(Guest guest) {
+		
 		try {
 			/*
 			 * Statement s = ConnectionService.getConnection().createStatement(); s.
@@ -28,5 +32,52 @@ public class GuestRepoDB {
 		} catch (SQLException e) {
 			System.out.println("Exception: " + e.getMessage());
 		}
+	}
+	
+	public List<Guest> getAllGuests() {
+		
+		List<Guest> allGuests = new ArrayList<Guest>();
+		try {
+			Statement s = ConnectionService.getConnection().createStatement();
+			s.executeQuery("SELECT username FROM users;");
+
+			ResultSet rs = s.getResultSet();
+			while (rs.next()) {
+				Guest g = new Guest();
+				g.setUsername(rs.getString("username"));
+				g.setName(rs.getString("user_actual_name"));
+				allGuests.add(g);
+			}
+			
+			return allGuests;
+		} catch (SQLException e) {
+			System.out.println("Exception: " + e.getMessage());
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public boolean checkGuest(String username, String password) {
+		try {
+			Statement guestStatement = ConnectionService.getConnection().createStatement();
+			guestStatement.executeQuery("SELECT * FROM users;");
+			
+			ResultSet rs = guestStatement.getResultSet();
+			while (rs.next()) {
+				if (rs.getString("username").equals(username)) { //commented out equalsIgnoreCase
+					if (rs.getString("user_password").equals(password)) {
+						return true;
+					} else {
+						System.out.println("Wrong password");
+						return false;
+					}
+				}
+			}
+			System.out.println("Username not found.");
+		} catch (SQLException e) {
+			System.out.println("Exception: " + e.getMessage());
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

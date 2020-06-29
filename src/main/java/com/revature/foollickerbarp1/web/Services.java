@@ -10,16 +10,20 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+
 import com.revature.foollickerbarp1.dao.GuestRepoDB;
 import com.revature.foollickerbarp1.dao.StockRepoDB;
 import com.revature.foollickerbarp1.model.Guest;
 import com.revature.foollickerbarp1.model.Stock;
+import com.revature.foollickerbarp1.service.ValidationService;
 
 
 @Path("/service")
 public class Services {
 	StockRepoDB stockRepo = new StockRepoDB();
 	GuestRepoDB guestRepo = new GuestRepoDB();
+	private ValidationService validation;
+	
 	
 	@GET
 	@Path("/getallstock")
@@ -50,10 +54,11 @@ public class Services {
 	public Response newUser(Guest guest) {
 		String username = guest.getUsername();
 		String password = guest.getPassword();
+		String name = guest.getName();
 		//UserTool tool = new UserTool();
 		//user = tool.createNewUser(username, password, password);
 		
-		if (guest.getUsername()!=null && guest.getPassword()!=null) {
+		if (username!=null && password!=null && name!=null) {
 			guestRepo.addGuest(guest);
 			//logger.info("User " + user.getUsername() + " successfully created.");
     		System.out.println(username + " logged in successfully.");
@@ -64,6 +69,32 @@ public class Services {
 		//	logger.warn("User " + user.getUsername() + " creation failed.");
 			return Response.status(403).build();
 		}
+	}
+	
+	@POST
+	@Path("/login")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response logInVerification(Guest guest) {
+		String username = guest.getUsername();
+		String accountType = guest.getAccountType();
+		String password = guest.getPassword();
+		if (validation.usernameExistsValidation(username)) {
+			if (guestRepo.checkGuest(username, password)) {
+				return Response.status(302).build();
+			}
+		} else {
+			System.out.println("Invalid user input.");
+		}
+		return null;
+		
+	}
+	
+	@POST
+	@Path("/deletedrink")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response deleteDrink(Stock stock) {
+		stockRepo.deleteDrink(stock);
+		return Response.status(201).build();
 	}
 	
 	

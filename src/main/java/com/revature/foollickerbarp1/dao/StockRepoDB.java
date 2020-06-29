@@ -68,4 +68,18 @@ public class StockRepoDB {
 			System.out.println("Exception: " + e.getMessage());
 		}
 	}
+
+	public void deleteDrink(Stock stock) {
+		try {
+			PreparedStatement deleteDrink = ConnectionService.getConnection()
+					.prepareStatement("DELETE FROM stock WHERE stock.alcohol_name = ?;");
+
+			deleteDrink.setString(1, stock.getAlcoholName());
+
+			deleteDrink.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("Exception: " + e.getMessage());
+		}
+	}
 }

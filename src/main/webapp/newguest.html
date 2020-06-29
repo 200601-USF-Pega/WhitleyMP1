@@ -22,7 +22,7 @@
 				document.querySelector("#password").value = "";
 			}
 			if (this.readyState == 4 && this.status == 403) {
-				alert("Username already used. Please try again or log in with credentials.");
+				//alert("Username already used. Please try again or log in with credentials.");
 			}
 		}
 
@@ -50,16 +50,16 @@
 			<p>Please enter your information below to create an account</p>
 			<table>
 				<tr>
+					<td><label for="name">Name:</label></td>
+					<td><input type="text" id="name" name="name"></td>
+				</tr>
+				<tr>
 					<td><label for="username">Username:</label></td>
 					<td><input type="text" id="username" name="username"></td>
 				</tr>
 				<tr>
 					<td><label for="password">Password:</label></td>
-					<td><input type="password" id="password" name="password"></td>
-				</tr>
-				<tr>
-					<td><label for="reenter">Re-enter Password:</label></td>
-					<td><input type="password" id="reenter" name="reenter"></label></td>
+					<td><input type="password" id="password" name="password"></label></td>
 				</tr>
 			</table>
 			<br> <input type="button" id="inpButton" value="Sign Up"
