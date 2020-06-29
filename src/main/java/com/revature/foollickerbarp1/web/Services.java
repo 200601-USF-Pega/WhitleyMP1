@@ -11,6 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.revature.foollickerbarp1.dao.AdminRepoDB;
 import com.revature.foollickerbarp1.dao.BartenderRepoDB;
 import com.revature.foollickerbarp1.dao.GuestRepoDB;
 import com.revature.foollickerbarp1.dao.StockRepoDB;
@@ -25,6 +26,7 @@ public class Services {
 	StockRepoDB stockRepo = new StockRepoDB();
 	GuestRepoDB guestRepo = new GuestRepoDB();
 	BartenderRepoDB bartenderRepo = new BartenderRepoDB();
+	AdminRepoDB adminRepo = new AdminRepoDB();
 	
 	private ValidationService validation;
 	
@@ -105,14 +107,14 @@ public class Services {
 	@Path("/getbartenders")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getBartenders() {
-		return Response.ok((ArrayList<Bartender>)bartenderRepo.getAllBartenders()).build();
+		return Response.ok((ArrayList<Bartender>)adminRepo.getAllBartenders()).build();
 	}
 	
 	@PUT
 	@Path("/addbartender")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addBartender(Bartender bartender) {
-		bartenderRepo.addBartender(bartender);
+		adminRepo.addBartender(bartender);
 		return Response.status(201).build();
 	}
 	
@@ -131,5 +133,19 @@ public class Services {
 		return Response.status(201).build();
 	}
 	
+	@POST
+	@Path("/leaveatip")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response tipBartender(Bartender bartender) {
+		bartenderRepo.tipBartender(bartender);
+		return Response.status(201).build();
+	}
+	
+	@GET
+	@Path("/getallguests")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllGuests() {
+		return Response.ok((ArrayList<Guest>)bartenderRepo.getAllGuests()).build();
+	}
 	
 }

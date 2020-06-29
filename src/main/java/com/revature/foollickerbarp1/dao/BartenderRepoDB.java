@@ -8,45 +8,47 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.revature.foollickerbarp1.model.Bartender;
+import com.revature.foollickerbarp1.model.Guest;
 import com.revature.foollickerbarp1.model.Stock;
 import com.revature.foollickerbarp1.web.ConnectionService;
 
 public class BartenderRepoDB {
-	public List<Bartender> getAllBartenders() {
+	
+	public void tipBartender(Bartender bartender) {
+		try {
+			PreparedStatement tip = ConnectionService.getConnection()
+					.prepareStatement("UPDATE tips SET tip_amount = tip_amount + ? WHERE bartender = ?");
 
-		List<Bartender> allBartenders = new ArrayList<Bartender>();
+			tip.setDouble(1, bartender.getTipAmount());
+			tip.setString(2, bartender.getUsername());
+			tip.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("Exception: " + e.getMessage());
+		}
+	}
+	
+	public List<Guest> getAllGuests() {
+
+		List<Guest> allGuests = new ArrayList<Guest>();
 		try {
 			Statement s = ConnectionService.getConnection().createStatement();
-			s.executeQuery("SELECT * FROM tips;");
+			s.executeQuery("SELECT * FROM users WHERE users.account_type = 'Guest';");
 
 			ResultSet rs = s.getResultSet();
 			while (rs.next()) {
-				Bartender b = new Bartender();
-				b.setName(rs.getString("bartender"));
-				b.setTipAmount(rs.getDouble("tip_amount"));
-				allBartenders.add(b);
+				Guest g = new Guest();
+				g.setName(rs.getString("user_actual_name"));
+				g.setUsername(rs.getString("username"));
+				allGuests.add(g);
 			}
 
-			return allBartenders;
+			return allGuests;
 		} catch (SQLException e) {
 			System.out.println("Exception: " + e.getMessage());
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
-	public void addBartender(Bartender bartender) {
-		try {
-			PreparedStatement addBartender = ConnectionService.getConnection().prepareStatement(
-					"INSERT INTO tips (bartender) VALUES (?);");
-			addBartender.setString(1, bartender.getName());
-			//addBartender.setDouble(2, bartender.getTipAmount());
-		
-			addBartender.executeUpdate();
 
-		} catch (SQLException e) {
-			System.out.println("Exception: " + e.getMessage());
-		}
-	}
 }
-

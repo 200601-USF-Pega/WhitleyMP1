@@ -20,13 +20,13 @@
 				let table = document.querySelector("#bartenderTable tbody");
 
 				for (let i = 0; i < bartender.length; ++i) {
-				let row = table.insertRow(table.rows.length);
+					let row = table.insertRow(table.rows.length);
 
-				let bartenderNameCell = row.insertCell(0);
-				bartenderNameCell.innerHTML = bartender[i].name;
+					let bartenderNameCell = row.insertCell(0);
+					bartenderNameCell.innerHTML = bartender[i].name;
 
-				let bartenderTipCell = row.insertCell(1);
-				bartenderTipCell.innerHTML = bartender[i].tipAmount;
+					let bartenderTipCell = row.insertCell(1);
+					bartenderTipCell.innerHTML = bartender[i].tipAmount;
 
 				}
 			}
@@ -51,11 +51,45 @@
 			}
 		}
 
-		req.open("PUT",
-				"http://localhost:8080/FoolLickerBarP1/rest/service/addbartender",
-				true);
+		req
+				.open(
+						"PUT",
+						"http://localhost:8080/FoolLickerBarP1/rest/service/addbartender",
+						true);
 		req.setRequestHeader('Content-Type', 'application/json');
 		req.send(JSON.stringify(newB));
+	}
+	var guest = [];
+	function getAllGuests() {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status > 199) {
+				document.querySelectorAll("#guestTable tbody tr").forEach(
+						function(e) {
+							e.remove()
+						});
+
+				guest = JSON.parse(this.responseText);
+				let table = document.querySelector("#guestTable tbody");
+
+				for (let i = 0; i < guest.length; ++i) {
+					let row = table.insertRow(table.rows.length);
+
+					let nameCell = row.insertCell(0);
+					nameCell.innerHTML = guest[i].name;
+
+					let usernameCell = row.insertCell(1);
+					usernameCell.innerHTML = guest[i].username;
+
+				}
+			}
+		};
+		xhttp
+				.open(
+						"GET",
+						"http://localhost:8080/FoolLickerBarP1/rest/service/getallguests",
+						true);
+		xhttp.send();
 	}
 </script>
 <link rel="stylesheet" href="fool_licker_bar.css">
@@ -75,16 +109,30 @@
 
 			</tr>
 			<tr>
-			<td>
-				<div>
-					<label>Bartender Name</label>
+				<td>
 					<div>
-						<input type="text" id="name" name="name" />
+						<label>Bartender Name</label>
+						<div>
+							<input type="text" id="name" name="name" />
+						</div>
 					</div>
-				</div>
 
-				<button type="submit" onClick="addBartender()">Add Bartender</button>
-			</td>
+					<button type="submit" onClick="addBartender()">Add
+						Bartender</button>
+				</td>
+			</tr>
+			<tr>
+
+				<td><a href="stock.html" class="btn">Review Stock
+						Information</a></td>
+
+			</tr>
+			<tr>
+
+				<td>
+					<button type="submit" onClick="getAllGuests()">Check on
+						Guests</button>
+				</td>
 			</tr>
 		</table>
 
@@ -102,6 +150,18 @@
 		</tbody>
 	</table>
 
+	<table id="guestTable">
+		<thead>
+			<tr>
+				<td>Name</td>
+				<td>Username</td>
+
+			</tr>
+		</thead>
+		<tbody>
+
+		</tbody>
+	</table>
 </body>
 
 </html>

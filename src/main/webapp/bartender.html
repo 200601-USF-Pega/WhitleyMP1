@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+	var guest = [];
+	function getAllGuests() {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status > 199) {
+				document.querySelectorAll("#guestTable tbody tr").forEach(
+						function(e) {
+							e.remove()
+						});
+
+				guest = JSON.parse(this.responseText);
+				let table = document.querySelector("#guestTable tbody");
+
+				for (let i = 0; i < guest.length; ++i) {
+					let row = table.insertRow(table.rows.length);
+
+					let nameCell = row.insertCell(0);
+					nameCell.innerHTML = guest[i].name;
+
+					let usernameCell = row.insertCell(1);
+					usernameCell.innerHTML = guest[i].username;
+
+				}
+			}
+		};
+		xhttp
+				.open(
+						"GET",
+						"http://localhost:8080/FoolLickerBarP1/rest/service/getallguests",
+						true);
+		xhttp.send();
+	}
+</script>
+<link rel="stylesheet" href="fool_licker_bar.css">
+<title>Bartender</title>
+</head>
+
+<body>
+	<div class="container">
+		<h1>Bartender Page</h1>
+		<table>
+			<tr>
+				<td><a href="stock.html" class="btn">Review Stock
+						Information</a></td>
+			</tr>
+			<tr>
+
+				<td>
+					<button type="submit" onClick="getAllGuests()">Check on
+						Guests</button>
+				</td>
+			</tr>
+		</table>
+
+	</div>
+
+	<table id="guestTable">
+		<thead>
+			<tr>
+				<td>Name</td>
+				<td>Username</td>
+			
+			</tr>
+		</thead>
+		<tbody>
+
+		</tbody>
+	</table>
+
+</body>
+
+</html>

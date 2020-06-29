@@ -65,6 +65,28 @@
 		req.setRequestHeader('Content-Type', 'application/json');
 		req.send(JSON.stringify(drinkOrder));
 	}
+	
+	function tipBartender() {
+		let tip = {};
+		tip.username = document.querySelector("#bartendername").value;
+		tip.tipAmount = document.querySelector("#tip").value;
+
+		var req = new XMLHttpRequest();
+		req.onreadystatechange = function() {
+			if (this.readyState > 3) {
+				document.querySelector("#bartendername").value = "";
+				document.querySelector("#tip").value = "";
+			}
+		}
+
+		req
+				.open(
+						"POST",
+						"http://localhost:8080/FoolLickerBarP1/rest/service/leaveatip",
+						true);
+		req.setRequestHeader('Content-Type', 'application/json');
+		req.send(JSON.stringify(tip));
+	}
 </script>
 <link rel="stylesheet" href="fool_licker_bar.css">
 <title>Stock</title>
@@ -90,6 +112,25 @@
 				</div>
 
 				<button type="submit" onClick="orderDrink()">Order Drink!</button>
+			</td>
+			</tr>
+			
+			<tr>
+				<td>
+				<div>
+					<label>Bartender Name</label>
+					<div>
+						<input type="text" id="bartendername" name="bartendername" />
+					</div>
+				</div>
+				<div>
+					<label>Tip Amount</label>
+					<div>
+						<input type="text" id="tip" name="tip" />
+					</div>
+				</div>
+
+				<button type="submit" onClick="tipBartender()">Tip Bartender!</button>
 			</td>
 			</tr>
 		</table>
