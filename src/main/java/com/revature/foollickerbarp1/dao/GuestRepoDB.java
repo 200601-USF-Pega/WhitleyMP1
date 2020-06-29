@@ -39,7 +39,7 @@ public class GuestRepoDB {
 		List<Guest> allGuests = new ArrayList<Guest>();
 		try {
 			Statement s = ConnectionService.getConnection().createStatement();
-			s.executeQuery("SELECT username FROM users;");
+			s.executeQuery("SELECT username FROM users WHERE users.account_type = 'Guest';");
 
 			ResultSet rs = s.getResultSet();
 			while (rs.next()) {
